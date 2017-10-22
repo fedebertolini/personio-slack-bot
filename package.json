@@ -1,0 +1,19 @@
+{
+  "name": "personio-slack-bot",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "author": "Federico Bertolini",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@slack/client": "^3.14.1",
+    "axios": "^0.16.2",
+    "cheerio": "^1.0.0-rc.2",
+    "date-fns": "^1.29.0",
+    "dotenv": "^4.0.0",
+    "lodash": "^4.17.4",
+    "vdata-parser": "^0.1.5"
+  }
+}
