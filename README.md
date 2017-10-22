@@ -18,3 +18,29 @@ in this list you need to add another two environment variable definitions:
 
 ## Usage
 Run `npm run start`.
+
+## Example
+`.env` file:
+```
+SLACK_HOOK_URL=https://hooks.slack.com/services/ABCDEF
+
+PERSONIO_CALENDARS=BIRTHDAY,VACATION
+
+PERSONIO_URL_BIRTHDAY=https://my-company.personio.de/calendar/ical/123456/birthdays/0/calendar.ics
+PERSONIO_URL_VACATION=https://my-company.personio.de/calendar/ical/123456/vacations/0/calendar.ics
+
+PERSONIO_MESSAGE_BIRTHDAY=:birthday: *Birthday* :birthday:
+PERSONIO_MESSAGE_VACATION=:palm_tree: *Vacation* :palm_tree:
+```
+
+Slack message:
+```
+Sunday 22nd of October - Nut Day
+
+:birthday: *Birthday* :birthday:
+- Jane Doe
+
+:palm_tree: *Vacation* :palm_tree:
+- Federico Bertolini
+- John Doe
+```
