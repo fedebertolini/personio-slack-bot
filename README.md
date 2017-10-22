@@ -1,5 +1,8 @@
 # personio-slack-bot
-NodeJS app that fetches today's events from Personio and posts a summary to a Slack channel.
+NodeJS app that fetches today's events from [Personio](https://www.personio.de/) and posts a
+summary to a [Slack](https://slack.com/) channel.
+It also gets one of the current [Days of the year](https://www.daysoftheyear.com/) to use in
+the Slack message.
 
 ## Installation
 First install the node dependencies:
