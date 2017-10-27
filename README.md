@@ -18,6 +18,7 @@ in this list you need to add another two environment variable definitions:
  copying the link.
   - `PERSONIO_MESSAGE_{CALENDAR_ID}`: When the events are posted to Slack, these are grouped by Calendar
  ID. This env variable defines the group's header.
+- `IGNORE_LIST` (optional): comma separated list of employee names that should be ignored.
 
 ## Usage
 Run `npm run start`.

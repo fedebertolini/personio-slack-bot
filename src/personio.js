@@ -4,6 +4,8 @@ const flatten = require('lodash/flatten');
 const isWithinRange = require('date-fns/is_within_range');
 const setYear = require('date-fns/set_year');
 
+const ignoreList = (process.env.IGNORE_LIST || '').split(',').map(name => name.trim());
+
 exports.getEvents = date => {
     const calendars = getCalendars();
     const calendarParsingPromises = calendars.map(parseCalendar);
@@ -32,15 +34,19 @@ const getCalendars = () => {
 const parseCalendar = calendar => {
     return axios.get(calendar.url).then(result => {
         const data = icalParser.fromString(result.data);
-        const events = data.VCALENDAR.VEVENT;
 
-        return events.map(event => ({
+        let events = data.VCALENDAR.VEVENT.map(event => ({
             calendarId: calendar.id,
             name: getNameFromSummary(event.SUMMARY),
             start: parseDate(event.DTSTART.value),
             end: parseDate(event.DTEND.value),
             isYearlyEvent: isYearlyEvent(event),
         }));
+
+        if (ignoreList.length) {
+            events = events.filter(e => ignoreList.indexOf(e.name) === -1);
+        }
+        return events;
     });
 };
 
