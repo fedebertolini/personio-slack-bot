@@ -50,7 +50,7 @@ const parseCalendar = calendar => {
     });
 };
 
-const getNameFromSummary = summary => /^([\w\s]*)\W?/.exec(summary)[1].trim();
+const getNameFromSummary = summary => /^([A-zÀ-ÖØ-öø-ÿ\s]*)\W?/.exec(summary)[1].trim();
 
 const parseDate = date => {
     const match = /(\d\d\d\d)(\d\d)(\d\d)/.exec(date).slice(1, 4);
