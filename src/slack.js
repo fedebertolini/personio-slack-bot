@@ -12,7 +12,9 @@ exports.sendPersonioEvents = (day, dayOfYear, events) => {
 
     console.log(fullMessage);
 
-    sendSlackMessage(fullMessage);
+    if (SLACK_HOOK_URL) {
+        sendSlackMessage(fullMessage);
+    }
 };
 
 const getEventsMessage = events => {
