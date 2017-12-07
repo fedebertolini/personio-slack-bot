@@ -6,8 +6,8 @@ const SLACK_HOOK_URL = process.env.SLACK_HOOK_URL;
 
 exports.sendPersonioEvents = (day, dayOfYear, events) => {
     const message = getEventsMessage(events);
-
-    const header = `\n${format(day, 'dddd Do of MMMM')} - ${dayOfYear}\n\n`;
+    const dayOfTheYearLink = `<${dayOfYear.href}|${dayOfYear.title}>`
+    const header = `\n${format(day, 'dddd Do of MMMM')} - ${dayOfTheYearLink}\n\n`;
     const fullMessage = header + message;
 
     console.log(fullMessage);

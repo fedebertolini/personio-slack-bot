@@ -9,5 +9,9 @@ exports.getToday = () => axios.get(URL)
             decodeEntities: false,
             normalizeWhitespace: true,
         });
-        return $('#primary-1 .dayLink').text();
+
+        return {
+            title: $('#primary-1 .dayLink').text(),
+            href: $('#primary-1 .dayLink').attr('href'),
+        }
     });
