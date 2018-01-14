@@ -11,7 +11,7 @@ exports.getToday = () => axios.get(URL)
         });
 
         return {
-            title: $('#primary-1 .dayLink').text(),
-            href: $('#primary-1 .dayLink').attr('href'),
+            title: $('#homepage-banner-click-target').text(),
+            href: $('#homepage-banner-click-target').attr('href'),
         }
     });
