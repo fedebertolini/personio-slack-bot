@@ -5,7 +5,8 @@
   "license": "MIT",
   "author": "Federico Bertolini",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "install-deps-and-start": "npm install && npm run start"
   },
   "dependencies": {
     "@slack/client": "^3.14.1",
