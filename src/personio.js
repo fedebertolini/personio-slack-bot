@@ -37,7 +37,7 @@ const parseCalendar = calendar => {
 
         let events = data.VCALENDAR.VEVENT.map(event => ({
             calendarId: calendar.id,
-            name: getNameFromSummary(event.SUMMARY),
+            name: event.SUMMARY,
             start: parseDate(event.DTSTART.value),
             end: parseDate(event.DTEND.value),
             isYearlyEvent: isYearlyEvent(event),
@@ -49,8 +49,6 @@ const parseCalendar = calendar => {
         return events;
     });
 };
-
-const getNameFromSummary = summary => /^([A-zÀ-ÖØ-öø-ÿ\s]*)\W?/.exec(summary)[1].trim();
 
 const parseDate = date => {
     const match = /(\d\d\d\d)(\d\d)(\d\d)/.exec(date).slice(1, 4);
