@@ -1,7 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-const URL = 'https://www.daysoftheyear.com/';
+const URL = 'https://www.daysoftheyear.com';
 
 exports.getToday = () => axios.get(URL)
     .then(result => {
@@ -12,6 +12,6 @@ exports.getToday = () => axios.get(URL)
 
         return {
             title: $('#homepage-banner-click-target').text(),
-            href: $('#homepage-banner-click-target').attr('href'),
+            href: URL + $('#homepage-banner-click-target').attr('href'),
         }
     });
