@@ -37,7 +37,7 @@ const parseCalendar = calendar => {
 
         let events = data.VCALENDAR.VEVENT.map(event => ({
             calendarId: calendar.id,
-            name: event.SUMMARY,
+            name: translate(event.SUMMARY),
             start: parseDate(event.DTSTART.value),
             end: parseDate(event.DTEND.value),
             isYearlyEvent: isYearlyEvent(event),
@@ -56,3 +56,19 @@ const parseDate = date => {
 };
 
 const isYearlyEvent = event => event.RRULE === 'FREQ=YEARLY';
+
+const TRANSLATIONS = {
+    'Vertreter': 'Substitute',
+    '½ letzter Tag': 'Half of the last day',
+    'Zweite Tageshälfte': 'Second half of the day',
+    '½ erster Tag': 'Half of the first day',
+    'Erste Tageshälfte': 'First half of the day',
+    'Löschung angefragt': 'Cancellation requested',
+};
+
+const TRANSLATION_KEYS = Object.keys(TRANSLATIONS);
+
+const translate = text => TRANSLATION_KEYS.reduce(
+    (translatedText, key) => translatedText.replace(key, TRANSLATIONS[key]),
+    text
+);
