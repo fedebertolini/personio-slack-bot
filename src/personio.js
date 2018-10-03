@@ -1,8 +1,8 @@
 const axios = require('axios');
 const icalParser = require('vdata-parser');
 const flatten = require('lodash/flatten');
+const orderBy = require('lodash/orderBy');
 const isWithinRange = require('date-fns/is_within_range');
-const setYear = require('date-fns/set_year');
 
 const ignoreList = (process.env.IGNORE_LIST || '').split(',').map(name => name.trim());
 
@@ -46,7 +46,7 @@ const parseCalendar = calendar => {
         if (ignoreList.length) {
             events = events.filter(e => ignoreList.indexOf(e.name) === -1);
         }
-        return events;
+        return orderBy(events, 'name');
     });
 };
 
