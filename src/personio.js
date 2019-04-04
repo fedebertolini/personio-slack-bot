@@ -3,6 +3,8 @@ const icalParser = require('vdata-parser');
 const flatten = require('lodash/flatten');
 const orderBy = require('lodash/orderBy');
 const isWithinRange = require('date-fns/is_within_range');
+const endOfDay = require('date-fns/end_of_day');
+const addDays = require('date-fns/add_days');
 
 const ignoreList = (process.env.IGNORE_LIST || '').split(',').map(name => name.trim());
 
@@ -14,7 +16,7 @@ exports.getEvents = date => {
         const events = flatten(results);
         return events.filter(event => {
             if (!event.isYearlyEvent) {
-                return isWithinRange(date, event.start, event.end);
+                return isWithinRange(date, event.start, endOfDay(event.end));
             }
             return (
                 event.start.getDate() === date.getDate() &&
@@ -40,7 +42,7 @@ const parseCalendar = calendar => {
             calendarId: calendar.id,
             name: removeCalendarName(event.SUMMARY),
             start: parseDate(event.DTSTART.value),
-            end: parseDate(event.DTEND.value),
+            end: addDays(parseDate(event.DTEND.value), -1),
             isYearlyEvent: isYearlyEvent(event),
         }));
 
@@ -51,8 +53,8 @@ const parseCalendar = calendar => {
     });
 };
 
-const parseDate = date => {
-    const match = /(\d\d\d\d)(\d\d)(\d\d)/.exec(date).slice(1, 4);
+const parseDate = dateString => {
+    const match = /(\d\d\d\d)(\d\d)(\d\d)/.exec(dateString).slice(1, 4);
     return new Date(match[0], match[1] - 1, match[2]);
 };
 

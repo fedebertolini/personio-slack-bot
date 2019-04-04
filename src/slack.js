@@ -6,7 +6,7 @@ const SLACK_HOOK_URL = process.env.SLACK_HOOK_URL;
 
 exports.sendPersonioEvents = (day, dayOfYear, events) => {
     const message = getEventsMessage(events);
-    const dayOfTheYearLink = `<${dayOfYear.href}|${dayOfYear.title}>`
+    const dayOfTheYearLink = `<${dayOfYear.href}|${dayOfYear.title}>`;
     const header = `\n${format(day, 'dddd Do of MMMM')} - ${dayOfTheYearLink}\n\n`;
     const fullMessage = header + message;
 
@@ -19,7 +19,7 @@ exports.sendPersonioEvents = (day, dayOfYear, events) => {
 
 const getEventsMessage = events => {
     if (!events.length) {
-        return 'Today there are no events in Personio\'s calendar\n';
+        return "Today there are no events in Personio's calendar\n";
     }
     const eventGroups = _.groupBy(events, 'calendarId');
 
@@ -28,16 +28,24 @@ const getEventsMessage = events => {
         if (!groupTitle) {
             return message;
         }
-        const people = eventGroups[calendarId].reduce((peopleList, event) => {
-            return `${peopleList}- ${event.name}\n`;
-        }, '');
-        return `${message}${groupTitle}\n${people}\n`;
+        const people = eventGroups[calendarId]
+            .map(event => {
+                if (event.start.getTime() === event.end.getTime()) {
+                    return `- ${event.name}`;
+                }
+                return `- ${event.name} [${formatDate(event.start)} - ${formatDate(event.end)}]`;
+            })
+            .join('\n');
+
+        return `${message}${groupTitle}\n${people}\n\n`;
     }, '');
-}
+};
+
+const formatDate = date => format(date, 'MMMM Do');
 
 const sendSlackMessage = message => {
     const webhook = new IncomingWebhook(SLACK_HOOK_URL);
-    webhook.send(message, (err, header, statusCode, body) => {
+    webhook.send(message, (err, header, statusCode) => {
         if (err) {
             console.log('Slack Error:', err);
         } else {
@@ -46,4 +54,4 @@ const sendSlackMessage = message => {
     });
 };
 
-const getEventTypeMessage = calendarId => process.env[`PERSONIO_MESSAGE_${calendarId}`]
+const getEventTypeMessage = calendarId => process.env[`PERSONIO_MESSAGE_${calendarId}`];
