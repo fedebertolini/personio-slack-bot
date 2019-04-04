@@ -38,7 +38,7 @@ const parseCalendar = calendar => {
 
         let events = data.VCALENDAR.VEVENT.map(event => ({
             calendarId: calendar.id,
-            name: event.SUMMARY,
+            name: removeCalendarName(event.SUMMARY),
             start: parseDate(event.DTSTART.value),
             end: parseDate(event.DTEND.value),
             isYearlyEvent: isYearlyEvent(event),
@@ -57,3 +57,8 @@ const parseDate = date => {
 };
 
 const isYearlyEvent = event => event.RRULE === 'FREQ=YEARLY';
+
+const removeCalendarName = summary => {
+    const match = /(\[.*\]\s+)?(.*)/.exec(summary);
+    return match ? match[2] : summary;
+};
