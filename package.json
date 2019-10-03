@@ -9,7 +9,7 @@
     "install-deps-and-start": "npm install && npm run start"
   },
   "dependencies": {
-    "@slack/client": "^3.16.1-sec.2",
+    "@slack/client": "^5.0.2",
     "axios": "^0.19.0",
     "cheerio": "^1.0.0-rc.3",
     "date-fns": "^1.30.1",
