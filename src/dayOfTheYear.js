@@ -11,7 +11,7 @@ exports.getToday = () => axios.get(URL)
         });
 
         return {
-            title: $('#homepage-banner-click-target').text(),
-            href: URL + $('#homepage-banner-click-target').attr('href'),
+            title: $('#mainBannerLink').text(),
+            href: URL + $('#mainBannerLink').attr('href'),
         }
     });
