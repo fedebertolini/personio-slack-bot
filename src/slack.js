@@ -5,16 +5,33 @@ const format = require('date-fns/format');
 const { SLACK_HOOK_URL, SLACK_CHANNEL } = process.env;
 
 exports.sendPersonioEvents = (day, dayOfYear, events) => {
-    const message = getEventsMessage(events);
-    const dayOfTheYearLink = `<${dayOfYear.href}|${dayOfYear.title}>`;
-    const header = `\n${format(day, 'dddd Do of MMMM')} - ${dayOfTheYearLink}\n\n`;
-    const fullMessage = header + message;
+    const headerText = getHeaderText(day, dayOfYear);
+    const eventMessage = getEventsMessage(events);
+    const fullMessage = `${headerText}\n\n${eventMessage}`;
 
     console.log(fullMessage);
 
+    const block = {
+        type: 'section',
+        text: {
+            type: 'mrkdwn',
+            text: fullMessage,
+        },
+        accessory: {
+            type: 'image',
+            image_url: dayOfYear.imageUrl,
+            alt_text: dayOfYear.title
+        }
+    };
+
     if (SLACK_HOOK_URL) {
-        sendSlackMessage(fullMessage);
+        sendSlackBlocks([block]);
     }
+};
+
+const getHeaderText = (day, dayOfYear) => {
+    const dayOfTheYearLink = `<${dayOfYear.href}|${dayOfYear.title}>`;
+    return `*${format(day, 'dddd Do of MMMM')}* - ${dayOfTheYearLink}`;
 };
 
 const getEventsMessage = events => {
@@ -43,9 +60,10 @@ const getEventsMessage = events => {
 
 const formatDate = date => format(date, 'MMMM Do');
 
-const sendSlackMessage = message => axios.post(SLACK_HOOK_URL, {
+const sendSlackBlocks = blocks => axios.post(SLACK_HOOK_URL, {
     channel: SLACK_CHANNEL,
-    text: message,
+    text: '',
+    blocks,
 });
 
 const getEventTypeMessage = calendarId => process.env[`PERSONIO_MESSAGE_${calendarId}`];
