@@ -1,8 +1,8 @@
 const _ = require('lodash');
+const axios = require('axios');
 const format = require('date-fns/format');
-const IncomingWebhook = require('@slack/client').IncomingWebhook;
 
-const SLACK_HOOK_URL = process.env.SLACK_HOOK_URL;
+const { SLACK_HOOK_URL, SLACK_CHANNEL } = process.env;
 
 exports.sendPersonioEvents = (day, dayOfYear, events) => {
     const message = getEventsMessage(events);
@@ -43,15 +43,9 @@ const getEventsMessage = events => {
 
 const formatDate = date => format(date, 'MMMM Do');
 
-const sendSlackMessage = message => {
-    const webhook = new IncomingWebhook(SLACK_HOOK_URL);
-    webhook.send(message, (err, header, statusCode) => {
-        if (err) {
-            console.log('Slack Error:', err);
-        } else {
-            console.log('Received', statusCode, 'from Slack');
-        }
-    });
-};
+const sendSlackMessage = message => axios.post(SLACK_HOOK_URL, {
+    channel: SLACK_CHANNEL,
+    text: message,
+});
 
 const getEventTypeMessage = calendarId => process.env[`PERSONIO_MESSAGE_${calendarId}`];

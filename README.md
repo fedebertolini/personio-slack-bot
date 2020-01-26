@@ -11,6 +11,7 @@ First install the node dependencies:
 Then create a `.env` file (you can use [.env.dist](https://github.com/fedebertolini/personio-slack-bot/blob/master/.env.dist)
 as an example). You need to add these environment variable definitions:
 - `SLACK_HOOK_URL`: Slack's hook URL that will be used to post messages to Slack.
+- `SLACK_CHANNEL`: Slack's channel where the event report is going to be sent to.
 - `PERSONIO_CALENDARS`: List of calendar identifiers separated by comma. For each calendar id defined
 in this list you need to add another two environment variable definitions:
   - `PERSONIO_URL_{CALENDAR_ID}`: Personio's _iCalendar_ link. You can get this link by going to the
@@ -27,6 +28,7 @@ Run `npm run start`.
 `.env` file:
 ```
 SLACK_HOOK_URL=https://hooks.slack.com/services/ABCDEF
+SLACK_CHANNEL=general
 
 PERSONIO_CALENDARS=BIRTHDAY,VACATION
 
