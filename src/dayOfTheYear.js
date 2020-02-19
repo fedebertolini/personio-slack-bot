@@ -12,7 +12,7 @@ exports.getToday = () => axios.get(URL)
 
         return {
             title: $('#mainBannerLink').text(),
-            href: URL + $('#mainBannerLink').attr('href'),
+            href: $('#mainBannerLink').attr('href'),
             imageUrl: $('.banner--home img').attr('src'),
         }
     });
