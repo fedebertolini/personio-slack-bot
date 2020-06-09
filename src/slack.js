@@ -25,8 +25,9 @@ exports.sendPersonioEvents = (day, dayOfYear, events) => {
     };
 
     if (SLACK_HOOK_URL) {
-        sendSlackBlocks([block]);
+        return sendSlackBlocks([block]);
     }
+    return Promise.resolve();
 };
 
 const getHeaderText = (day, dayOfYear) => {

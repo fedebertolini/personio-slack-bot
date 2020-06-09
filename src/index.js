@@ -13,7 +13,7 @@ Promise.all([
     const todayEvents = result[0];
     const todayDayOfYear = result[1];
     
-    slack.sendPersonioEvents(today, todayDayOfYear, todayEvents);
+    return slack.sendPersonioEvents(today, todayDayOfYear, todayEvents);
 })
 .catch(error => {
     console.log(error);
