@@ -11,8 +11,8 @@ exports.getToday = () => axios.get(URL)
         });
 
         return {
-            title: $('#mainBannerLink').text(),
-            href: $('#mainBannerLink').attr('href'),
-            imageUrl: $('.banner--home img').attr('src'),
+            title: $('.today .heading a').text(),
+            href: $('.today .heading a').attr('href'),
+            imageUrl: $('.today img.cover').attr('src'),
         }
     });
