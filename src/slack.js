@@ -17,12 +17,14 @@ exports.sendPersonioEvents = (day, dayOfYear, events) => {
             type: 'mrkdwn',
             text: fullMessage,
         },
-        accessory: {
+    };
+    if (dayOfYear.imageUrl && dayOfYear.title) {
+        block.accessory = {
             type: 'image',
             image_url: dayOfYear.imageUrl,
             alt_text: dayOfYear.title
-        }
-    };
+        };
+    }
 
     if (SLACK_HOOK_URL) {
         return sendSlackBlocks([block]);
