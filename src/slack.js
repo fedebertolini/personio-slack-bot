@@ -35,7 +35,7 @@ exports.sendPersonioEvents = (day, dayOfYear, events) => {
 const getHeaderText = (day, dayOfYear) => {
     const { href, title } = dayOfYear;
     const dayOfTheYearLink = href && title ? ` - <${href}|${title}>` : '';
-    return `*${format(day, 'dddd Do of MMMM')}*${dayOfTheYearLink}`;
+    return `*${format(day, `EEEE do 'of' MMMM`)}*${dayOfTheYearLink}`;
 };
 
 const getEventsMessage = events => {

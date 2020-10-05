@@ -2,9 +2,9 @@ const axios = require('axios');
 const icalParser = require('vdata-parser');
 const flatten = require('lodash/flatten');
 const orderBy = require('lodash/orderBy');
-const isWithinRange = require('date-fns/is_within_range');
-const endOfDay = require('date-fns/end_of_day');
-const addDays = require('date-fns/add_days');
+const isWithinInterval = require('date-fns/isWithinInterval');
+const endOfDay = require('date-fns/endOfDay');
+const addDays = require('date-fns/addDays');
 
 const ignoreList = (process.env.IGNORE_LIST || '').split(',').map(name => name.trim());
 
@@ -16,7 +16,8 @@ exports.getEvents = date => {
         const events = flatten(results);
         return events.filter(event => {
             if (!event.isYearlyEvent) {
-                return isWithinRange(date, event.start, endOfDay(event.end));
+                const interval = { start: event.start, end: endOfDay(event.end) }
+                return isWithinInterval(date, interval);
             }
             return (
                 event.start.getDate() === date.getDate() &&
