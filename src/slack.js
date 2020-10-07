@@ -62,7 +62,7 @@ const getEventsMessage = events => {
     }, '');
 };
 
-const formatDate = date => format(date, 'MMMM Do');
+const formatDate = date => format(date, 'MMMM do');
 
 const sendSlackBlocks = blocks => axios.post(SLACK_HOOK_URL, {
     channel: SLACK_CHANNEL,
