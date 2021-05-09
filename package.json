@@ -1,6 +1,6 @@
 {
   "name": "personio-slack-bot",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "src/index.js",
   "license": "MIT",
   "author": "Federico Bertolini",
